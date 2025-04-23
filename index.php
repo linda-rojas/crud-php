@@ -1,12 +1,8 @@
 <?php
-
 require_once './db/conection.php';
-
 $conection = connection();
 $stmt = $conection->query("SELECT * FROM users");
-
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,66 +10,76 @@ $stmt = $conection->query("SELECT * FROM users");
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-
     <title>CRUD</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body>
-    <div class="flex justify-center items-center h-auto bg-gray-100">
-        <form class="flex flex-col gap-4 h-80 justify-center" action="./users/create_user.php" method="POST">
+<body class="bg-gray-100">
 
-            <h1 class="text-center font-medium t-[50px]">Crear Usuario</h1>
+    <div class="flex justify-center mt-[40px] items-center bg-gray-100">
+        <form class="flex flex-col gap-4 justify-center p-4 rounded bg-blue-100 shadow-md w-full max-w-sm" action="./users/create_user.php" method="POST">
+            <h1 class="text-center font-bold text-[20px] text-blue-800">Crear Usuario</h1>
 
-            <div>
-                <label for="name">Nombre</label>
-                <input type="text" name="name" required>
+            <div class="flex flex-col gap-1">
+                <label for="name" class="text-sm text-gray-700">Nombre</label>
+                <input type="text" name="name" required class="p-2 rounded border border-gray-300 text-sm">
             </div>
-            <div>
-                <label for="lastname">Apellidos</label>
-                <input type="text" name="lastname" required>
+
+            <div class="flex flex-col gap-1">
+                <label for="lastname" class="text-sm text-gray-700">Apellidos</label>
+                <input type="text" name="lastname" required class="p-2 rounded border border-gray-300 text-sm">
             </div>
-            <div>
-                <label for="phone">Celular</label>
-                <input type="number" name="phone" required>
+
+            <div class="flex flex-col gap-1">
+                <label for="phone" class="text-sm text-gray-700">Celular</label>
+                <input type="text" name="phone" oninput="this.value = this.value.replace(/\D/g, '')" maxlength="10" required class="p-2 rounded border border-gray-300 text-sm">
             </div>
-            <div>
-                <label for="email">Correo</label>
-                <input type="email" name="email" required>
+
+            <div class="flex flex-col gap-1">
+                <label for="email" class="text-sm text-gray-700">Correo</label>
+                <input type="email" name="email" required class="p-2 rounded border border-gray-300 text-sm">
             </div>
-            <button type="submit" class="flex justify-center text-center p-1 rounded bg-green-400">Crear Usuario</button>
+
+            <button type="submit" class="p-2 rounded bg-green-500 text-white hover:bg-green-600 text-sm">Crear Usuario</button>
         </form>
     </div>
 
-    <div>
-        <table>
-            <h2>USUARIOS REGISTRADOS</h2>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellidos</th>
-                    <th>Celular</th>
-                    <th>Correo</th>
-                </tr>
-            </thead>
-
-            <tbody>
-                <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+    <div class="max-w-6xl mx-auto mt-10 p-4">
+        <h2 class="text-2xl font-bold text-center mb-4 text-gray-700">Usuarios Registrados</h2>
+        <div class="overflow-x-auto bg-white rounded shadow-md">
+            <table class="min-w-full text-sm text-left">
+                <thead class="bg-gray-200 text-gray-700">
                     <tr>
-                        <th><?= $row['id'] ?></th>
-                        <th><?= $row['name'] ?></th>
-                        <th><?= $row['lastname'] ?></th>
-                        <th><?= $row['phone'] ?></th>
-                        <th><?= $row['email'] ?></th>
-
-                        <th><a href="./users/edit_user.php?id=<?= $row['id'] ?>">Editar</a></th>
-                        <th><a href="./users/delete_user.php?id=<?= $row['id'] ?>">Eliminar</a></th>
+                        <th class="px-4 py-2">ID</th>
+                        <th class="px-4 py-2">Nombre</th>
+                        <th class="px-4 py-2">Apellidos</th>
+                        <th class="px-4 py-2">Celular</th>
+                        <th class="px-4 py-2">Correo</th>
+                        <th class="px-4 py-2">Editar</th>
+                        <th class="px-4 py-2">Eliminar</th>
                     </tr>
-                <?php endwhile; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) : ?>
+                        <tr class="border-t">
+                            <td class="px-4 py-2"><?= $row['id'] ?></td>
+                            <td class="px-4 py-2"><?= $row['name'] ?></td>
+                            <td class="px-4 py-2"><?= $row['lastname'] ?></td>
+                            <td class="px-4 py-2"><?= $row['phone'] ?></td>
+                            <td class="px-4 py-2"><?= $row['email'] ?></td>
+                            <td class="px-4 py-2 text-blue-600 hover:underline">
+                                <a href="./users/edit_user.php?id=<?= $row['id'] ?>">Editar</a>
+                            </td>
+                            <td class="px-4 py-2 text-red-600 hover:underline">
+                                <a href="./users/delete_user.php?id=<?= $row['id'] ?>">Eliminar</a>
+                            </td>
+                        </tr>
+                    <?php endwhile; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
+
 </body>
 
 </html>

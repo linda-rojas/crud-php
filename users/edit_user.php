@@ -4,7 +4,11 @@ require_once '../db/conection.php';
 $conection = connection();
 
 $id = $_GET['id'];
-$stmt = $conection->query("SELECT * FROM users WHERE id=$id");
+$sql = "SELECT * FROM users WHERE id=:id";
+$stmt = $conection->prepare($sql);
+$stmt->execute([
+    ':id' => $id
+]);
 
 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 

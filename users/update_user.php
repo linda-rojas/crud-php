@@ -2,12 +2,18 @@
 
 require_once '../db/conection.php';
 
+// sanitizar datos de entrada del formulario
+function sanitize($data)
+{
+    return htmlspecialchars(stripslashes(trim($data)));
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id = $_POST['id'];
-    $name = $_POST['name'];
-    $lastname = $_POST['lastname'];
-    $phone = $_POST['phone'];
-    $email = $_POST['email'];
+    $id = sanitize($_POST['id']);
+    $name = sanitize($_POST['name']);
+    $lastname = sanitize($_POST['lastname']);
+    $phone = sanitize($_POST['phone']);
+    $email = sanitize($_POST['email']);
 }
 
 $connection = connection();

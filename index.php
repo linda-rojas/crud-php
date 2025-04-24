@@ -1,6 +1,8 @@
 <?php
 require_once './db/conection.php';
 $conection = connection();
+
+// query() Ejecuta una consulta SQL directamente.
 $stmt = $conection->query("SELECT * FROM users");
 ?>
 
@@ -55,8 +57,9 @@ $stmt = $conection->query("SELECT * FROM users");
                         <th class="px-4 py-2">Apellidos</th>
                         <th class="px-4 py-2">Celular</th>
                         <th class="px-4 py-2">Correo</th>
-                        <th class="px-4 py-2">Editar</th>
-                        <th class="px-4 py-2">Eliminar</th>
+                        <th class="px-4 py-2 text-center"></th>
+                        <th class="px-4 py-2 text-center"></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -67,10 +70,10 @@ $stmt = $conection->query("SELECT * FROM users");
                             <td class="px-4 py-2"><?= $row['lastname'] ?></td>
                             <td class="px-4 py-2"><?= $row['phone'] ?></td>
                             <td class="px-4 py-2"><?= $row['email'] ?></td>
-                            <td class="px-4 py-2 text-blue-600 hover:underline">
+                            <td class="px-4 py-2 text-blue-600 hover:bg-blue-500 hover:text-white cursor-pointer font-semibold text-center">
                                 <a href="./users/edit_user.php?id=<?= $row['id'] ?>">Editar</a>
                             </td>
-                            <td class="px-4 py-2 text-red-600 hover:underline">
+                            <td class="px-4 py-2 text-red-600 hover:bg-red-500 cursor-pointer hover:text-white font-semibold text-center">
                                 <a href="./users/delete_user.php?id=<?= $row['id'] ?>">Eliminar</a>
                             </td>
                         </tr>
